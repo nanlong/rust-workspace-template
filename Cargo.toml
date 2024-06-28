@@ -1,0 +1,6 @@
+[workspace]
+members = ["{{project-name}}"]
+resolver = "2"
+
+
+[workspace.dependencies]
