@@ -1,5 +1,7 @@
 [workspace]
 members = ["{{project-name}}"]
+# Only check / build main crates by default (check all with `--workspace`)
+default-members = ["{{project-name}}"]
 resolver = "2"
 
 
