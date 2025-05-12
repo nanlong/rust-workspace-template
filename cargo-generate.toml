@@ -1,0 +1,3 @@
+[template]
+# 跳过 cliff.toml 的变量替换
+exclude = ["cliff.toml"]
