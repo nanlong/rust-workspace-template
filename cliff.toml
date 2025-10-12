@@ -44,10 +44,6 @@ footer = """
 """
 # remove the leading and trailing whitespace from the templates
 trim = true
-# postprocessors
-postprocessors = [
-    { pattern = '\$REPO', replace = "https://github.com/{{ username }}/{{ project-name }}" }, # replace repository URL
-]
 
 [git]
 # parse the commits based on https://www.conventionalcommits.org
@@ -58,7 +54,11 @@ filter_unconventional = false
 split_commits = false
 # regex for preprocessing the commit messages
 commit_preprocessors = [
-    # { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/orhun/git-cliff/issues/${2}))"}, # replace issue numbers
+    # { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/{{ username }}/{{ project-name }}/issues/${2}))"}, # replace issue numbers
+]
+# postprocessors
+postprocessors = [
+    # { pattern = '\$REPO', replace = "https://github.com/{{ username }}/{{ project-name }}" }, # replace repository URL
 ]
 # regex for parsing and grouping commits
 commit_parsers = [
