@@ -3,5 +3,6 @@ name = "{{ project-name }}"
 version = "0.1.0"
 authors = ["{{ authors }}"]
 edition = "2024"
+license = "MIT or Apache-2.0"
 
 [dependencies]
