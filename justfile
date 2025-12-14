@@ -17,3 +17,7 @@ fix-lint:
 # Check for unused dependencies in all packages
 check-deps:
     cargo +nightly udeps --workspace --all-features
+
+# Run tests for all packages in the workspace
+test:
+    cargo nextest run --all-features --workspace
