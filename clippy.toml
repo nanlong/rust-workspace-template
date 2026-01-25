@@ -1,0 +1,24 @@
+# Clippy Lint 配置
+# https://doc.rust-lang.org/clippy/lint_configuration.html
+
+# 函数参数数量上限（默认 7）
+too-many-arguments-threshold = 10
+
+# 类型复杂度上限（默认 250）
+type-complexity-threshold = 300
+
+# 认知复杂度上限（默认 25）
+cognitive-complexity-threshold = 30
+
+# 结构体字段数量上限（默认 8）
+max-struct-bools = 5
+
+# 允许在测试中使用 unwrap
+allow-unwrap-in-tests = true
+
+# 允许在测试中使用 expect
+allow-expect-in-tests = true
+
+# 需要文档的最小可见性（默认 "private"）
+# 可选: "crate", "pub", "all"
+missing-docs-in-crate-items = false

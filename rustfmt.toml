@@ -1,0 +1,47 @@
+# Rust 代码格式化配置
+# 注意：大部分选项需要 nightly rustfmt (cargo +nightly fmt)
+
+# Rust edition
+edition = "2024"
+
+# 最大行宽
+max_width = 100
+
+# 缩进空格数
+tab_spaces = 4
+
+# Import 语句
+# -----------------------------------------------------------------------------
+# 将来自同一 crate 的 import 语句合并为嵌套格式
+imports_granularity = "Crate"
+
+# 按 标准库 -> 外部 crate -> 本地模块 顺序分组
+group_imports = "StdExternalCrate"
+
+# 自动排序 import 语句
+reorder_imports = true
+
+# 自动排序 mod 声明
+reorder_modules = true
+
+# 注释格式化
+# -----------------------------------------------------------------------------
+# 格式化文档注释中的代码块
+format_code_in_doc_comments = true
+
+# 自动换行长注释
+wrap_comments = true
+
+# 注释换行宽度
+comment_width = 100
+
+# 统一注释风格
+normalize_comments = true
+
+# 其他格式化
+# -----------------------------------------------------------------------------
+# 格式化长字符串
+format_strings = true
+
+# 十六进制字面量使用大写
+hex_literal_case = "Upper"
