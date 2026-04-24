@@ -1,0 +1,15 @@
+# Cargo 配置
+# https://doc.rust-lang.org/cargo/reference/config.html
+
+# Linux musl target：用 clang + lld 加速链接
+[target.x86_64-unknown-linux-musl]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[target.aarch64-unknown-linux-musl]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+# Cargo 构建并行度：默认按 CPU 核心数。如需覆盖取消注释并调整
+# [build]
+# jobs = 8

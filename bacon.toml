@@ -1,29 +1,62 @@
-# This is a configuration file for the bacon tool
+# bacon 配置 — 代码变更自动重启
+# 文档: https://dystroy.org/bacon/config/
 #
-# Complete help on configuration: https://dystroy.org/bacon/config/
-#
-# You may check the current default at
-#   https://github.com/Canop/bacon/blob/main/defaults/default-bacon.toml
-#
-default_job = "run"
+# 默认 default-bacon.toml: https://github.com/Canop/bacon/blob/main/defaults/default-bacon.toml
+
+default_job = "check"
 env.CARGO_TERM_COLOR = "always"
 
-[jobs.run]
+# === 代码检查 ===
+
+[jobs.check]
+command = ["cargo", "check", "--workspace", "--all-features"]
+need_stdout = false
+
+[jobs.clippy]
 command = [
   "cargo",
-  "run",
-  # put launch parameters for your program behind a `--` separator
+  "clippy",
+  "--workspace",
+  "--all-targets",
+  "--all-features",
+  "--",
+  "-D",
+  "warnings",
 ]
+need_stdout = false
+
+[jobs.test]
+command = [
+  "cargo",
+  "nextest",
+  "run",
+  "--all-features",
+  "--workspace",
+  "--no-tests=pass",
+]
+need_stdout = true
+
+[jobs.doc]
+command = ["cargo", "doc", "--workspace", "--no-deps"]
+need_stdout = false
+
+# === 服务热重启 ===
+# 模板：复制后改 -p 包名，watch 限定监听目录（改 A 不重启 B）
+# 注：watch 字符串在 cargo-generate 渲染后才指向真实目录，直接在模板仓库跑 bacon run 无效
+
+[jobs.run]
+command = ["cargo", "run", "-p", "{{project-name}}"]
 need_stdout = true
 allow_warnings = true
 background = false
 on_change_strategy = "kill_then_restart"
-# kill = ["pkill", "-TERM", "-P"]
+watch = ["{{project-name}}"]
 
-# You may define here keybindings that would be specific to
-# a project, for example a shortcut to launch a specific job.
-# Shortcuts to internal functions (scrolling, toggling, etc.)
-# should go in your personal global prefs.toml file instead.
+# === 快捷键 ===
+
 [keybindings]
-# alt-m = "job:my-job"
-r = "job:run" # comment this to have 'c' run clippy on only the default target
+c = "job:check"
+l = "job:clippy"
+t = "job:test"
+d = "job:doc"
+r = "job:run"

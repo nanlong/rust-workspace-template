@@ -4,13 +4,47 @@ members = ["{{project-name}}"]
 default-members = ["{{project-name}}"]
 resolver = "2"
 
+[workspace.package]
+edition = "2024"
+rust-version = "1.95"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+
+# ============================================================================
+# Lint 配置（全 workspace 统一）
+# 成员 crate 需在自己的 Cargo.toml 加 `[lints] workspace = true` 继承
+# ============================================================================
+[workspace.lints.clippy]
+# 生产代码不应 panic（测试豁免见 clippy.toml 的 allow-*-in-tests）
+unwrap_used = "deny"
+expect_used = "deny"
+# 未完成代码不应留在主分支
+todo = "deny"
+unimplemented = "deny"
+# 调试残留
+dbg_macro = "deny"
+# 日志规范：建议用 tracing；CLI binary 可在 main.rs 顶加 `#![allow(clippy::print_stdout)]`（模板已预置）
+print_stdout = "warn"
+print_stderr = "warn"
+# Arc::clone 显式调用
+clone_on_ref_ptr = "deny"
+# 依赖版本安全
+wildcard_dependencies = "deny"
+
 [profile.dev]
 opt-level = 1
 # https://davidlattimore.github.io/posts/2024/02/04/speeding-up-the-rust-edit-build-run-cycle.html
 debug = "line-tables-only"
 split-debuginfo = "unpacked"
+# 关增量编译以减小 target 体积与链接时间；若追求单文件改动极速回编可改回 true
+incremental = false
 
 [profile.dev.package."*"]
 opt-level = 3
+debug = false
 
-[workspace.dependencies]
+# 默认 codegen-units = 16；追求极致性能可显式设为 1 并启用 lto = "thin"（编译显著变慢）
+[profile.release]
+strip = true
+panic = "abort"

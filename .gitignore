@@ -2,7 +2,26 @@
 **/*.rs.bk
 /env
 
+# 编辑器 / AI 工具产物
 .zed
 .claude
 .serena
 .worktrees
+.superpowers
+.context
+.idea
+.vscode
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# 环境变量（敏感）
+.env
+
+# 生产配置（包含敏感信息）
+config/*/prod.toml
+
+# 开发环境配置（包含本地数据库凭据）
+config/*/dev.toml

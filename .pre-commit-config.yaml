@@ -10,8 +10,11 @@ repos:
       - id: check-yaml
       - id: check-toml
       - id: end-of-file-fixer
+        exclude: (^|/)migrations/
       - id: mixed-line-ending
+        exclude: (^|/)migrations/
       - id: trailing-whitespace
+        exclude: (^|/)migrations/
   - repo: https://github.com/ComPWA/taplo-pre-commit
     rev: v0.9.3
     hooks:
@@ -21,43 +24,42 @@ repos:
       - id: cargo-fmt
         name: cargo fmt
         description: Format files with rustfmt.
-        entry: bash -c 'cargo +nightly fmt -- --check'
-        language: rust
+        entry: cargo +nightly fmt --all -- --check
+        language: system
         files: \.rs$
-        args: []
+        pass_filenames: false
       - id: cargo-deny
         name: cargo deny check
         description: Check cargo dependencies
-        entry: bash -c 'cargo deny check -d'
-        language: rust
+        entry: cargo deny check
+        language: system
         files: \.rs$
-        args: []
+        pass_filenames: false
       - id: typos
         name: typos
         description: check typo
-        entry: bash -c 'typos'
-        language: rust
-        files: \.*$
+        entry: typos
+        language: system
         pass_filenames: false
       - id: cargo-check
         name: cargo check
         description: Check the package for errors.
-        entry: bash -c 'cargo check --all'
-        language: rust
+        entry: cargo check --workspace --all-features
+        language: system
         files: \.rs$
         pass_filenames: false
       - id: cargo-clippy
         name: cargo clippy
         description: Lint rust sources
-        entry: bash -c 'cargo clippy --workspace --all-targets --all-features --tests --benches -- -D warnings'
-        language: rust
+        entry: cargo clippy --workspace --all-targets --all-features -- -D warnings
+        language: system
         files: \.rs$
         pass_filenames: false
       - id: cargo-test
         name: cargo test
         description: unit test for the project
-        entry: bash -c 'cargo nextest run --all-features --workspace --no-tests=pass'
-        language: rust
+        entry: cargo nextest run --all-features --workspace --no-tests=pass
+        language: system
         files: \.rs$
         pass_filenames: false
       - id: changelog
